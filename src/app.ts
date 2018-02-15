@@ -9,22 +9,21 @@ import {TabbedInputDirective} from 'src/tabbedInput'
   template: `
     <div>
       <h2>Hello {{name}}</h2>
-      <tabbed-input [initVal]="arr"></tabbed-input>
+      <tabbed-input [initVal]="arr" [options]="autoPopulateOptions" ></tabbed-input>
     </div>
   `,
 })
 export class App {
   
     arr : Array<string> = [];
-    name:string;
+    name: string;
+    autoPopulateOptions: Array<string> = ["Option1","Oops2"];
   
     constructor() {
-        this.name = `Angular! v${VERSION.full}`
+        this.name = `Angular! v${VERSION.full}`;
         this.arr = ["One", "To2"];
     }
-  
-  
-  
+
 }
 
 @NgModule({
