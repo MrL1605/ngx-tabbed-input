@@ -2,7 +2,7 @@
 import {Component, NgModule, VERSION} from '@angular/core'
 import {BrowserModule} from '@angular/platform-browser'
 import {FormsModule} from '@angular/forms'
-import {TabbedInputDirective} from 'src/tabbedInput'
+import {TabbedInputDirective} from './directive';
 
 @Component({
   selector: 'my-app',
@@ -16,7 +16,7 @@ import {TabbedInputDirective} from 'src/tabbedInput'
 export class App {
   
     arr : Array<string> = [];
-    name: string;
+    name: string = "";
     autoPopulateOptions: Array<string> = ["Option1","Oops2"];
   
     constructor() {
