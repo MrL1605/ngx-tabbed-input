@@ -1,1 +1,3 @@
-export {TabbedInputDirective} from "./src/directive";
+export {TabbedInputDirective} from "./src";
+export {TabbedInputModule} from "./lib-main";
+
