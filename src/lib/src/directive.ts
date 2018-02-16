@@ -4,13 +4,15 @@ import {Component, Input, OnInit} from '@angular/core'
     selector: 'tabbed-input',
     styles: [
             `
-            .i-tabbed-wrapper {
-                position: relative;
+            .ngx-dropdown-style {
+                padding-top: 3px;
+                position: absolute;
+                margin-top: 35px;
+                z-index: 100;
             }
 
-            .i-tabbed-full-width {
-                position: absolute;
-                width: 100%;
+            .ngx-dropdown-focus {
+                background-color: #f5f5f5;
             }
         `
     ],
@@ -29,12 +31,12 @@ import {Component, Input, OnInit} from '@angular/core'
                                margin: 0;border: 0;padding: 0; background:transparent;">
                 </div>
             </div>
-            <div class="col-sm-12 form-control-static" style="padding-top: 3px">
-                <ul class="hideDiv list-group">
-                    <li *ngFor="let each of autoPopulateOptions; let optionInd=index " class="list-group-item"
-                        (click)="autoPopulateClick(each)" [class.active]="optionInd == selectedInd">{{each}}
-                    </li>
-                </ul>
+            <div class="col-sm-12 form-control-static ngx-dropdown-style" *ngIf="autoPopulateOptions.length != 0">
+                <div class="list-group">
+                    <a *ngFor="let each of autoPopulateOptions; let optionInd=index " class="list-group-item"
+                       (click)="autoPopulateClick(each)" [class.ngx-dropdown-focus]="optionInd == selectedInd">{{each}}
+                    </a>
+                </div>
             </div>
         </div>
     `
@@ -68,6 +70,13 @@ export class TabbedInputDirective implements OnInit {
     clearAll() {
         this.newCard = '';
         this.cardsArr = [];
+    }
+
+    /**
+     * Function used to retrieve the results of cards created.
+     **/
+    getCards(): Array<string> {
+        return this.cardsArr;
     }
 
     /**
