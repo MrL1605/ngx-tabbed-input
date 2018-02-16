@@ -1,6 +1,6 @@
 {
   "name": "ngx-tabbed-input",
-  "version": "1.3.4",
+  "version": "1.3.5",
   "description": "Simple Directive to have tabbed into input field",
   "main": "index.js",
   "directories": {
