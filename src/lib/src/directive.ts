@@ -48,11 +48,18 @@ export class TabbedInputDirective implements OnInit {
         }
     }
 
+    /**
+     * Function is used to clear all existing cards in array.
+     * */
     clearAll() {
         this.newCard = '';
         this.cardsArr = [];
     }
 
+    /**
+     * Function is used to reset the autoPopulateOptions list and populate it
+     * with all the options which are not already in cards Array.
+     * */
     populateList() {
         this.selectedInd = -1;
         this.autoPopulateOptions = [];
@@ -63,7 +70,9 @@ export class TabbedInputDirective implements OnInit {
     }
 
     /**
-     * Function used to create a card. But mostly used externally by autoPopulate list click
+     * Function used to create a card by directly passing the value of card.
+     * All checks to to insert or not should be done before this function is called.
+     * But mostly used externally by autoPopulate list click.
      * */
     autoPopulateClick(val: string) {
         if (val.trim() == '')
@@ -75,19 +84,34 @@ export class TabbedInputDirective implements OnInit {
             this.cardsArr.push(val.trim());
     }
 
+    /**
+     * Function used to listen to key events on when input is in focus.
+     * */
     keyDownListener(e: any) {
         // If Backspace is clicked
-        if (this.newCard.trim() == '' && e.keyCode == 8) {
+        // and input field is empty
+        if (e.keyCode == 8 && this.newCard.trim() == '') {
             this.cardsArr.pop();
             return;
         }
 
         // If Down is clicked
+        // and length of autoPopulateOptions is not empty
         if (e.keyCode == 40 && this.autoPopulateOptions.length != 0) {
             this.selectedInd = (this.selectedInd + 1) % this.autoPopulateOptions.length;
+            return;
+        }
+
+        // If Up is clicked
+        // and length of autoPopulateOptions is not empty
+        if (e.keyCode == 38 && this.autoPopulateOptions.length != 0) {
+            if (this.selectedInd != -1)
+                this.selectedInd = (this.selectedInd - 1) % this.autoPopulateOptions.length;
+            return;
         }
 
         // If Enter is clicked
+        // and something is selected
         if (e.keyCode == 13 && this.selectedInd != -1) {
             this.autoPopulateClick(this.autoPopulateOptions[this.selectedInd]);
         }
@@ -100,20 +124,27 @@ export class TabbedInputDirective implements OnInit {
         // as there is a change in value of input field
         this.autoPopulateOptions = [];
         for (let each of this.options) {
+
+            // Check with all the options if current value matches
             if (each.toLowerCase().indexOf(current.trim().toLowerCase()) != -1) {
+
                 // Only insert given value if it already does not exist in card
                 if (this.onlyOptionsAllowed && this.cardsArr.indexOf(each) == -1)
                     this.autoPopulateOptions.push(each);
+                // If onlyAllowed is not enabled then just add
                 else if (!this.onlyOptionsAllowed)
                     this.autoPopulateOptions.push(each);
             }
         }
-        console.log(this.autoPopulateOptions);
+
+        // This is the condition if space is the last character entered with valid value.
         if (current[current.length - 1] == ' ' && current.trim() != '') {
+            // If onlyOptionsAllowed is enabled then directly insert
             if (!this.onlyOptionsAllowed) {
                 this.populateList();
                 this.autoPopulateClick(current);
             } else {
+                // Else check if it exists in autoPopulate else just empty it.
                 let autoPopInd = -1;
                 for (let each of this.autoPopulateOptions) {
                     autoPopInd++;
@@ -127,13 +158,19 @@ export class TabbedInputDirective implements OnInit {
                 return;
             }
         } else if (current[current.length - 1] == ' ') {
+            // If last character is space but not word is not valid
             this.newCard = '';
             this.populateList();
         } else if (current.trim() == '') {
+            // word is just empty, don't show the autoPopulate
             this.autoPopulateOptions = [];
         }
     }
 
+    /**
+     * Card value is used to insert it back into autoPopulate list
+     * Card index is used to remove given element from cards Array
+     * */
     removeCard(cardValue: string, cardInd: number) {
         this.cardsArr.splice(cardInd, 1);
         this.autoPopulateOptions.push(cardValue);
