@@ -2,20 +2,34 @@ import {Component, Input, OnInit} from '@angular/core'
 
 @Component({
     selector: 'tabbed-input',
+    styles: [
+            `
+            .i-tabbed-wrapper {
+                position: relative;
+            }
+
+            .i-tabbed-full-width {
+                position: absolute;
+                width: 100%;
+            }
+        `
+    ],
     template: `
 
-        <div>
-            <div style="display:inline" class="form-control">
-                <span style="margin-right:5px" class="text-center bg-info"
-                      *ngFor="let card of cardsArr; let ind=index"> {{card}}
-                    <span (click)="removeCard(card, ind)" class="glyphicon glyphicon-remove small"></span>
-                </span>
-                <input list="browsers" [(ngModel)]="newCard" name="cardHolder"
-                       (ngModelChange)="updateValue()" (keydown)="keyDownListener($event)"
-                       style="border: none; overflow: auto; outline: none;margin: 0;border: 0;padding: 0; background:transparent;"
-                       class="form-control-static">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="form-control" style="display: flex">
+                    <span style="margin-right:5px" class="text-center bg-info"
+                          *ngFor="let card of cardsArr; let ind=index"> {{card}}
+                        <span (click)="removeCard(card, ind)" class="glyphicon glyphicon-remove small"></span>
+                    </span>
+                        <input list="browsers" [(ngModel)]="newCard" name="cardHolder"
+                               (ngModelChange)="updateValue()" (keydown)="keyDownListener($event)"
+                               style="border: none; overflow: auto; outline: none;
+                               margin: 0;border: 0;padding: 0; background:transparent;">
+                </div>
             </div>
-            <div>
+            <div class="col-sm-12 form-control-static" style="padding-top: 3px">
                 <ul class="hideDiv list-group">
                     <li *ngFor="let each of autoPopulateOptions; let optionInd=index " class="list-group-item"
                         (click)="autoPopulateClick(each)" [class.active]="optionInd == selectedInd">{{each}}

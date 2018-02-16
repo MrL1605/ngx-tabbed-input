@@ -9,9 +9,11 @@ import {TabbedInputDirective} from './directive';
     template: `
         <div>
             <h2>Hello {{name}}</h2>
-            <tabbed-input [onlyOptionsAllowed]="true" [initVal]="arr"
+            <div class="col-sm-4">
+            <tabbed-input [onlyOptionsAllowed]="false" [initVal]="arr"
                           [options]="autoPopulateOptions" #tabbedInput>
             </tabbed-input>
+            </div>
             
             <div class="btn btn-default" (click)="cleanCards()" >Clear All</div>
             
