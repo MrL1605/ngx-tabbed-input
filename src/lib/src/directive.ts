@@ -25,10 +25,10 @@ import {Component, Input, OnInit} from '@angular/core'
                           *ngFor="let card of cardsArr; let ind=index"> {{card}}
                         <span (click)="removeCard(card, ind)" class="glyphicon glyphicon-remove small"></span>
                     </span>
-                        <input list="browsers" [(ngModel)]="newCard" name="cardHolder"
-                               (ngModelChange)="updateValue()" (keydown)="keyDownListener($event)"
-                               style="border: none; overflow: auto; outline: none;
-                               margin: 0;border: 0;padding: 0; background:transparent;">
+                    <input list="browsers" [(ngModel)]="newCard" name="cardHolder"
+                           (ngModelChange)="updateValue()" (keydown)="keyDownListener($event)"
+                           style="border: none; overflow: auto; outline: none;
+                           margin: 0;border: 0;padding: 0; background:transparent;">
                 </div>
             </div>
             <div class="col-sm-12 form-control-static ngx-dropdown-style" *ngIf="autoPopulateOptions.length != 0">
@@ -196,7 +196,6 @@ export class TabbedInputDirective implements OnInit {
      * */
     removeCard(cardValue: string, cardInd: number) {
         this.cardsArr.splice(cardInd, 1);
-        this.autoPopulateOptions.push(cardValue);
         this.selectedInd = -1;
     }
 
